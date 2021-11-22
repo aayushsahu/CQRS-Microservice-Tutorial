@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.solinvictus.Products.Entity.Product;
+import com.solinvictus.Products.CQRS.entity.Product;
 import com.solinvictus.Products.Exceptions.ProductNotFoundException;
 import com.solinvictus.Products.Repositories.ProductRepo;
 
@@ -26,7 +26,7 @@ public class ProductsServices {
 		return true;
 	}
 	
-	public Product getProduct(Long id) throws ProductNotFoundException {
+	public Product getProduct(String id) throws ProductNotFoundException {
 		Optional<Product> prod = productRepo.findById(id);
 		if(prod.isPresent())
 			return prod.get();

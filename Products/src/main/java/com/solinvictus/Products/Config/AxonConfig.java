@@ -1,6 +1,9 @@
 package com.solinvictus.Products.Config;
 
 import com.solinvictus.Products.CQRS.commands.ProductAggregate;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.security.AnyTypePermission;
+import com.thoughtworks.xstream.security.TypePermission;
 
 import org.axonframework.eventsourcing.EventSourcingRepository;
 import org.axonframework.eventsourcing.eventstore.EventStore;

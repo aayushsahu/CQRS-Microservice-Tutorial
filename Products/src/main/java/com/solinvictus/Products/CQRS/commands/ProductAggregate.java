@@ -21,7 +21,6 @@ public class ProductAggregate {
 	private boolean available;
 	
 	public ProductAggregate() {
-		//leave it blank always
 	}
 	
 	@CommandHandler

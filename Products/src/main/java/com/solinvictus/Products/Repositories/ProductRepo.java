@@ -3,9 +3,9 @@ package com.solinvictus.Products.Repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.solinvictus.Products.Entity.Product;
+import com.solinvictus.Products.CQRS.entity.Product;
 
 
 @Repository
-public interface ProductRepo extends JpaRepository<Product , Long>{
+public interface ProductRepo extends JpaRepository<Product , String>{
 }

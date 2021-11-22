@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.axonframework.messaging.responsetypes.ResponseTypes;
+import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.solinvictus.Products.CQRS.commands.CreateProductCommand;
-import com.solinvictus.Products.Entity.Product;
+import com.solinvictus.Products.CQRS.entity.Product;
+import com.solinvictus.Products.CQRS.query.FindProductsQuery;
 import com.solinvictus.Products.Models.CreateProductModel;
+import com.solinvictus.Products.Models.ReadProductModel;
 import com.solinvictus.Products.Service.ProductsServices;
 
 @RestController
@@ -27,19 +31,27 @@ public class ProductsController {
 	@Autowired
 	CommandGateway commandGateway;
 	
+	@Autowired
+	QueryGateway queryGateway;
+	
+	
 	@GetMapping("/products")
-	public ResponseEntity<List<Product>> getAllProducts(){
+	public ResponseEntity<List<ReadProductModel>> getAllProducts(){
 		
-		List<Product> listOfProducts = prodServices.getProducts();
-		return new ResponseEntity<>(listOfProducts, HttpStatus.OK);		
+		FindProductsQuery findProductsQuery = new FindProductsQuery();
+		List<ReadProductModel> products = queryGateway.query(findProductsQuery, 
+				ResponseTypes.multipleInstancesOf(ReadProductModel.class)).join();
+		return new ResponseEntity<>(products, HttpStatus.OK);		
 	}
 	
 	@GetMapping("/product?{id}")
 	public ResponseEntity<Product> getProduct(@PathVariable(required= true) String id){
 		
-		return new ResponseEntity<>(prodServices.getProduct(Long.valueOf(id)), HttpStatus.OK);
+		return new ResponseEntity<>(prodServices.getProduct(id), HttpStatus.OK);
 	}
 	
+	
+	//Command Controller
 	@PostMapping("/saveProduct")
 	public ResponseEntity<Void> productCreator(@RequestBody CreateProductModel createProductModel){
 		
@@ -59,4 +71,7 @@ public class ProductsController {
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	
+	
 }
