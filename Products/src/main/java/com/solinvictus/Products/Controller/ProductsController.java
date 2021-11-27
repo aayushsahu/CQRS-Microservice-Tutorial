@@ -3,6 +3,8 @@ package com.solinvictus.Products.Controller;
 import java.util.List;
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
@@ -53,7 +55,7 @@ public class ProductsController {
 	
 	//Command Controller
 	@PostMapping("/saveProduct")
-	public ResponseEntity<Void> productCreator(@RequestBody CreateProductModel createProductModel){
+	public String productCreator(@Valid @RequestBody CreateProductModel createProductModel){
 		
 		CreateProductCommand createProductCommand = CreateProductCommand.builder().
 				productId(UUID.randomUUID().toString()).
@@ -62,14 +64,15 @@ public class ProductsController {
 				price(createProductModel.getPrice()).
 				discountPercentage(createProductModel.getDiscountPercentage()).
 				available(createProductModel.isAvailable()).build();
+		String returnValue;
 		try {
-			commandGateway.sendAndWait(createProductCommand);
-//			commandGateway.send(createProductCommand);
+			returnValue = commandGateway.sendAndWait(createProductCommand);
+			//			commandGateway.send(createProductCommand);
 		}catch(Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			returnValue = e.getLocalizedMessage();
 		}
-		return new ResponseEntity<>(HttpStatus.OK);
+		return returnValue;
 	}
 	
 	

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ReadProductModel {
+	
 	private String title;
 	private String description;
 	private int price;
