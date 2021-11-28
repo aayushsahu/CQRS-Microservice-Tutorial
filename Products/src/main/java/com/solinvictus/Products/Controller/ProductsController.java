@@ -55,7 +55,7 @@ public class ProductsController {
 	
 	//Command Controller
 	@PostMapping("/saveProduct")
-	public String productCreator(@Valid @RequestBody CreateProductModel createProductModel){
+	public ResponseEntity<String> productCreator(@Valid @RequestBody CreateProductModel createProductModel){
 		
 		CreateProductCommand createProductCommand = CreateProductCommand.builder().
 				productId(UUID.randomUUID().toString()).
@@ -64,15 +64,17 @@ public class ProductsController {
 				price(createProductModel.getPrice()).
 				discountPercentage(createProductModel.getDiscountPercentage()).
 				available(createProductModel.isAvailable()).build();
+		
 		String returnValue;
 		try {
 			returnValue = commandGateway.sendAndWait(createProductCommand);
 			//			commandGateway.send(createProductCommand);
+			return new ResponseEntity<>(returnValue, HttpStatus.OK);
 		}catch(Exception e) {
 			e.printStackTrace();
 			returnValue = e.getLocalizedMessage();
+			return new ResponseEntity<>(returnValue, HttpStatus.BAD_GATEWAY);
 		}
-		return returnValue;
 	}
 	
 	
