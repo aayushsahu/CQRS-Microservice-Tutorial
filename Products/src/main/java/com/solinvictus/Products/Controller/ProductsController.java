@@ -26,57 +26,50 @@ import com.solinvictus.Products.Service.ProductsServices;
 
 @RestController
 public class ProductsController {
-	
+
 	@Autowired
 	private ProductsServices prodServices;
-	
+
 	@Autowired
 	CommandGateway commandGateway;
-	
+
 	@Autowired
 	QueryGateway queryGateway;
-	
-	
+
 	@GetMapping("/products")
-	public ResponseEntity<List<ReadProductModel>> getAllProducts(){
-		
+	public ResponseEntity<List<ReadProductModel>> getAllProducts() {
+
 		FindProductsQuery findProductsQuery = new FindProductsQuery();
-		List<ReadProductModel> products = queryGateway.query(findProductsQuery, 
-				ResponseTypes.multipleInstancesOf(ReadProductModel.class)).join();
-		return new ResponseEntity<>(products, HttpStatus.OK);		
+		List<ReadProductModel> products = queryGateway
+				.query(findProductsQuery, ResponseTypes.multipleInstancesOf(ReadProductModel.class)).join();
+		return new ResponseEntity<>(products, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/product?{id}")
-	public ResponseEntity<Product> getProduct(@PathVariable(required= true) String id){
-		
+	public ResponseEntity<Product> getProduct(@PathVariable(required = true) String id) {
+
 		return new ResponseEntity<>(prodServices.getProduct(id), HttpStatus.OK);
 	}
-	
-	
-	//Command Controller
+
+	// Command Controller
 	@PostMapping("/saveProduct")
-	public ResponseEntity<String> productCreator(@Valid @RequestBody CreateProductModel createProductModel){
-		
-		CreateProductCommand createProductCommand = CreateProductCommand.builder().
-				productId(UUID.randomUUID().toString()).
-				title(createProductModel.getTitle()).
-				description(createProductModel.getDescription()).
-				price(createProductModel.getPrice()).
-				discountPercentage(createProductModel.getDiscountPercentage()).
-				available(createProductModel.isAvailable()).build();
-		
+	public ResponseEntity<String> productCreator(@Valid @RequestBody CreateProductModel createProductModel) {
+
+		CreateProductCommand createProductCommand = CreateProductCommand.builder()
+				.productId(UUID.randomUUID().toString()).title(createProductModel.getTitle())
+				.description(createProductModel.getDescription()).price(createProductModel.getPrice())
+				.discountPercentage(createProductModel.getDiscountPercentage())
+				.available(createProductModel.isAvailable()).build();
+
 		String returnValue;
-		try {
-			returnValue = commandGateway.sendAndWait(createProductCommand);
-			//			commandGateway.send(createProductCommand);
-			return new ResponseEntity<>(returnValue, HttpStatus.OK);
-		}catch(Exception e) {
-			e.printStackTrace();
-			returnValue = e.getLocalizedMessage();
-			return new ResponseEntity<>(returnValue, HttpStatus.BAD_GATEWAY);
-		}
+		//		try {
+		returnValue = commandGateway.sendAndWait(createProductCommand);
+		return new ResponseEntity<>(returnValue, HttpStatus.OK);
+		//		}catch(Exception e) {
+		//			e.printStackTrace();
+		//			returnValue = e.getLocalizedMessage();
+		//			return new ResponseEntity<>(returnValue, HttpStatus.BAD_GATEWAY);
+		//		}
 	}
-	
-	
-	
+
 }

@@ -24,7 +24,7 @@ public class ProductAggregate {
 	}
 	
 	@CommandHandler
-	public ProductAggregate(CreateProductCommand createProductCommand) {
+	public ProductAggregate(CreateProductCommand createProductCommand) throws Exception{
 		//ADD SOME MODEL DATA VALIDATION AND EXCEPTIONS BASED ON VALIDATION
 		
 		

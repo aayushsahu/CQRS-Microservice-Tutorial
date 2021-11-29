@@ -56,7 +56,7 @@
 		<dependency>
 			<groupId>org.axonframework</groupId>
 			<artifactId>axon-spring-boot-starter</artifactId>
-			<version>4.2</version>
+			<version>4.5</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.axonframework</groupId>
