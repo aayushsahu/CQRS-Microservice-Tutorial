@@ -23,7 +23,11 @@ jobs:
       run: |
         cd EurekaNamingServer
         mvn -B package --file pom.xml
+    - name: ApiGateway Build with Maven
+      run: |
         cd ApiGateway
         mvn -B package --file pom.xml
+    - name: Products Build with Maven
+      run: |  
         cd Products
         mvn -B package --file pom.xml
