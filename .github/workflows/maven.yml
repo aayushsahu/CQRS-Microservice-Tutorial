@@ -25,14 +25,5 @@ jobs:
         cd EurekaNamingServer
         mvn -B package --file pom.xml
     
-    - name: ApiGateway Build with Maven
-      run: |
-        cd ..
-        cd ApiGateway
-        mvn -B package --file pom.xml
-    
-    - name: Products Build with Maven
-      run: |
-        cd .. 
-        cd Products
-        mvn -B package --file pom.xml
+    - name: list the directory
+      run: ls -a
