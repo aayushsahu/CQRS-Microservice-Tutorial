@@ -28,9 +28,9 @@ services:
     hostname: axonserver
     restart: always
     volumes:
-      - axonserver-data:/data
-      - axonserver-events:/eventdata
-      - axonserver-config:/config:ro
+      - ./axonserver-data:/data
+      - ./axonserver-events:/eventdata
+      - ./axonserver-config:/config:ro
     ports:
       - '8024:8024'
       - '8124:8124'
