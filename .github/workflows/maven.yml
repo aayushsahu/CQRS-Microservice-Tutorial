@@ -24,11 +24,6 @@ jobs:
       run: |
         cd EurekaNamingServer
         mvn -B package --file pom.xml
-      
-    - name: list the files in target directory
-      run: |
-        cd target
-        ls -a
     
     - name: ApiGateway Build with Maven
       run: |
@@ -36,17 +31,8 @@ jobs:
         cd ApiGateway
         mvn -B package --file pom.xml
     
-    - name: list the files in target directory
-      run: |
-        cd target
-        ls -a
     - name: Products Build with Maven
       run: |
         cd .. 
         cd Products
         mvn -B package --file pom.xml
-        
-    - name: list the files in target directory
-      run: |
-        cd target
-        ls -a
