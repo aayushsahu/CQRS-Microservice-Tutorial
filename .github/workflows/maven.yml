@@ -29,5 +29,6 @@ jobs:
         mvn -B package --file pom.xml
     - name: Products Build with Maven
       run: |  
+        docker-compose up -di
         cd Products
         mvn -B package --file pom.xml
