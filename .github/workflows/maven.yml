@@ -23,12 +23,17 @@ jobs:
       run: |
         cd EurekaNamingServer
         mvn -B package --file pom.xml
+        
     - name: ApiGateway Build with Maven
       run: |
         cd ApiGateway
         mvn -B package --file pom.xml
+        
+    - name: Run docker compose
+      run: |  
+        docker-compose up -d
+        
     - name: Products Build with Maven
       run: |  
-        docker-compose up -di
         cd Products
         mvn -B package --file pom.xml
