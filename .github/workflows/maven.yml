@@ -37,4 +37,4 @@ jobs:
     - name: Products Build with Maven
       run: |  
         cd Products
-        mvn -B package --file pom.xml
+        mvn -B -DskipTests=true package --file pom.xml
