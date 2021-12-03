@@ -55,4 +55,4 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           cd Products
-          mvn -B verify -Psonar -Dsonar.projectKey=aayushsahu_CQRS-Microservice-Tutorial
+          mvn -B verify -Psonar -Dsonar.projectKey=aayushsahu_CQRS-Microservice-Tutorial -DskipTests=true
