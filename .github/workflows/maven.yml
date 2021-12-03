@@ -36,7 +36,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
         cd EurekaNamingServer
-        mvn -B package org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=aayushsahu_CQRS-Microservice-Tutorial --file pom.xml
+        mvn -B package sonar:sonar -Dsonar.projectKey=aayushsahu_CQRS-Microservice-Tutorial --file pom.xml
         
     - name: ApiGateway Build with Maven
       env:
@@ -44,7 +44,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
         cd ApiGateway
-        mvn -B package org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=aayushsahu_CQRS-Microservice-Tutorial --file pom.xml
+        mvn -B package sonar:sonar -Dsonar.projectKey=aayushsahu_CQRS-Microservice-Tutorial --file pom.xml
                 
     - name: Products Build with Maven
       env:
@@ -52,4 +52,4 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
         cd Products
-        mvn -B package org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=aayushsahu_CQRS-Microservice-Tutorial  -DskipTests=true  --file pom.xml
+        mvn -B package sonar:sonar -Dsonar.projectKey=aayushsahu_CQRS-Microservice-Tutorial  -DskipTests=true  --file pom.xml
