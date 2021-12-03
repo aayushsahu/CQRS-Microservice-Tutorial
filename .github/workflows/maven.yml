@@ -38,8 +38,7 @@ jobs:
         cd Products
         mvn -B package -DskipTests=true  --file pom.xml
 
-  
-  analyze:
+    analyze:
     name: SonarCloud Analysis
     runs-on: ubuntu-latest
     steps:
